@@ -8,6 +8,7 @@
         placeholder="Type new todo"
         autofocus
         type="text"
+        (change)="changeHandler($event)"
       />
     </div>
   </header>
@@ -15,14 +16,15 @@
     <!-- This section should be hidden by default and shown when there are todos -->
     <section class="main">
       <ul class="todo-list">
-        <li class="completed">
+        <li *ngFor="let task of tasks(); index as i" class="completed">
           <div class="view">
-            <input class="toggle" type="checkbox" checked />
-            <label>Learn JavaScript</label>
-            <button class="destroy"></button>
+            <input (click)="handleCheck(task)" class="toggle" type="checkbox" [checked]="task.completed" />
+            <label>{{ task.title }}</label>
+            <button (click)="deleteTask(i)" class="destroy"></button>
           </div>
           <input class="edit" value="Learn JavaScript" />
         </li>
+        <!-- 
         <li>
           <div class="view">
             <input class="toggle" type="checkbox" />
@@ -39,12 +41,19 @@
           </div>
           <input class="edit" value="Make dishes" />
         </li>
-      </ul>
+        -->
+      </ul>   
     </section>
+    
     <!-- This footer should be hidden by default and shown when there are todos -->
     <footer class="footer">
       <!-- This should be `0 items left` by default -->
-      <span class="todo-count"><strong>0</strong> item left</span>
+      <span class="todo-count">
+        <strong>
+        @if(tasks().lenght > 1) {
+          {{tasks().lenght }}
+        }
+      </strong> item left</span>
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">
         <li>

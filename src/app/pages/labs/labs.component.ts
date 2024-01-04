@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-labs',
@@ -7,12 +7,12 @@ import { Component } from '@angular/core';
 })
 export class LabsComponent {
   welcome = 'HOLA'
-  tasks = [
+  tasks = signal([
     'instalar el angular CLI',
     'Crear proyecto',
     'Crear componentes'
-  ]
-  name = 'Fernando';
+  ])
+  name = signal('Fernando');
   age = 19;
   disabled = true;
   img = 'https://w3schools.com/howto/img_avatar.png'
@@ -27,5 +27,11 @@ export class LabsComponent {
 
   change(event: Event){
     console.log(event)
+  }
+
+  changeHandler(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const newValue = input.value;
+    this.name.set(newValue) //* <-- Forma de modificar un valor usando SIGNALS
   }
 }
